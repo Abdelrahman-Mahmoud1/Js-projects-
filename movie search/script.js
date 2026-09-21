@@ -9,9 +9,6 @@ if(inputValue === ''){
 const url = `https://www.omdbapi.com/?apikey=d5dfca2f&s=${inputValue}`;
 const response = await fetch(url)
 const results = await response.json();
-if(!results.ok){
- console('error something gone wrong try again later')
-}
 
  let html = '';
 const promises = results.Search.map(async(movie)=>{
