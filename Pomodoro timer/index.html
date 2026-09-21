@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pomodoro Timer</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 80px;
+    }
+    #time { font-size: 5rem; margin: 20px 0; }
+    button { font-size: 1rem; padding: 8px 16px; margin: 0 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1 id="mode">Focus</h1>
+  <div id="time">25:00</div>
+  <div>
+    <button id="start">Start</button>
+    <button id="pause">Pause</button>
+    <button id="reset">Reset</button>
+  </div>
+
+  <script src="timer.js"></script>
+</body>
+</html>

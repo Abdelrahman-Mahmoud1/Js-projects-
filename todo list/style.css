@@ -1,0 +1,72 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 40px;
+}
+
+.container {
+  width: 500px;
+  margin: auto;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+}
+/*
+.item-container{
+  display: flex;
+  row-gap: 10px;
+  column-gap: 10px;
+  margin-bottom: 10px;
+}
+*/
+
+.js-input,
+.js-date {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.js-addbtn,
+.js-edit,
+.js-delete,
+.js-completed {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.js-addbtn {
+  background-color: green;
+  color: white;
+}
+
+.js-edit {
+  background-color: orange;
+  color: white;
+}
+
+.js-delete {
+  background-color: red;
+  color: white;
+}
+
+.js-completed {
+  background-color: #333;
+  color: white;
+}
+
+.js-show p {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.js-checkbox {
+  margin-right: 8px;
+}
+
+.js-remaining {
+  font-weight: bold;
+}

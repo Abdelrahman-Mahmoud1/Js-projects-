@@ -1,0 +1,19 @@
+
+*{
+font-family: Arial, Helvetica, sans-serif;
+background-color: black;
+}
+body{
+ background-color: black;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ margin:0 auto;
+ padding: 50px;
+}
+input{
+  background-color: white;
+}
+button{
+  background-color: white;
+} 

@@ -1,0 +1,71 @@
+body{
+ font-family: Arial, Helvetica, sans-serif;
+ background-color: aquamarine;
+ color: black;
+ margin: 0;
+ 
+
+}
+.header{
+  text-align: center;
+  
+}
+nav{
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+.p1{
+ font-size: 20px;
+ font-weight: bold;
+ margin-top: 10px;
+ text-align: center;
+}
+.main-section{
+ max-width: 600px;
+ margin: 0 auto;
+
+}
+.section{
+ border: 1px solid #f21717;
+ border-radius: 10px;
+ padding: 15px;
+ margin-bottom: 15px;
+ box-shadow: 0 2px 5px rgba(20, 1, 1, 0.104);
+}
+a{
+  color: rgb(40, 37, 229);
+  text-decoration: none;
+}
+li{
+  line-height: 20px;
+}
+.footer{
+  text-align: center;
+}
+.skill-section{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  list-style: none;
+}
+.skill-section li{
+  background-color: rgb(0, 0, 0);
+  color:  white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.projects{
+  display: grid;
+  grid-template-columns: repeat(2 ,1fr);
+  gap: 15px;
+}
+@media (max-width:600px){
+  .projects{
+    grid-template-columns: 1fr;
+  }
+}
