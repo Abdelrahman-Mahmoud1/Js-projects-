@@ -45,11 +45,13 @@ forEach((button)=>{
   button.addEventListener('click' , ()=>{
   const id = button.dataset.id
   if(favorite.includes(id)){
+    button.innerHTML = 'added to the favorite'
      return
   }else{
     favorite.push(id);
   }
   saveToStorage();
+  getFavorites();
   getsInput();
   });
 });
@@ -58,9 +60,41 @@ searchBtn.addEventListener('click', getsInput);
 movieInput.addEventListener('keydown', (event) =>{
   if(event.key === 'Enter'){getsInput()}
 })
-function getFavorites(){
-  
+async function getFavorites(){
+  const promises =  favorite.map(async(id)=>{
+  const response = await fetch(`https://www.omdbapi.com/?apikey=d5dfca2f&i=${id}`);
+  const data = await response.json();
+  return data;
+  })
+  const moviedata = await Promise.all(promises);
+  let favoriteHTML = '';
+  moviedata.forEach((movie)=>{
+  const poster = movie.Poster !== 'N/A'? `<img src="${movie.Poster}">`: '';
+  favoriteHTML += `
+  <div class="favorite-card">
+  <p>${movie.Title}</p>
+  ${poster}
+  <p>${movie.Year}</p>
+  <p>${movie.imdbRating}</p>
+  <p>${movie.Plot}</p>
+  <button class="js-remove" data-id="${movie.imdbID}">Remove from Favorites</button>
+  </div>
+  `;
+  })
+  document.querySelector('.js-favorites').innerHTML = favoriteHTML;
+  document.querySelectorAll('.js-remove').
+  forEach((button)=>{
+    button.addEventListener('click' , ()=>{
+      const id = button.dataset.id
+      favorite = favorite.filter((p =>{return p !== id}))
+      saveToStorage();
+      getFavorites();
+    });
+  });
+      return favorite;
+
 }
+getFavorites();
 function saveToStorage(){
   localStorage.setItem('favorite' , JSON.stringify(favorite))
 }
