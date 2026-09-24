@@ -65,3 +65,4 @@ pauseBtn.addEventListener('click', pause);
 resetBtn.addEventListener('click', reset);
 
 render();
+console.log('fuck iff')
