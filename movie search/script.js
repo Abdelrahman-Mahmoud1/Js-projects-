@@ -27,6 +27,8 @@ const movies = await Promise.all(promises)
 
 movies.forEach((movie)=>{
   const poster = movie.Poster !== 'N/A'? `<img src="${movie.Poster}">`: '';
+ const add = favorite.includes(movie.imdbID) ? ' ❤️Added to  Favorites' : ' ❤️ Add To Favorites'
+
   html += `
  <div class="movie-card">
   ${movie.Title} 
@@ -35,7 +37,7 @@ movies.forEach((movie)=>{
   <p>${movie.Type}</p>
   <p>⭐${movie.imdbRating}</p>
   <p>${movie.Plot}</p>
-  <button class="js-favorite" data-id="${movie.imdbID}">❤️ Add to Favorites</button>
+  <button class="js-favorite" data-id="${movie.imdbID}">${add}</button>
  </div>
  `
 })
@@ -45,14 +47,15 @@ forEach((button)=>{
   button.addEventListener('click' , ()=>{
   const id = button.dataset.id
   if(favorite.includes(id)){
-    button.innerHTML = 'added to the favorite'
+    
      return
   }else{
     favorite.push(id);
+    button.innerHTML = ' ❤️Added to  Favorites';
   }
   saveToStorage();
   getFavorites();
-  getsInput();
+ 
   });
 });
 }
@@ -92,7 +95,6 @@ async function getFavorites(){
     });
   });
       return favorite;
-
 }
 getFavorites();
 function saveToStorage(){
