@@ -11,10 +11,13 @@ resultsContainer.textContent = 'Loading...';
 const url = `https://www.omdbapi.com/?apikey=d5dfca2f&s=${inputValue}`;
 const response = await fetch(url)
 const results = await response.json();
+<<<<<<< HEAD
 if(results.Response === 'False'){
   resultsContainer.textContent = 'movie not found'
  return;
 }
+=======
+>>>>>>> 8aefdd597aa9582ee5bb6f8f467d4261e257c11f
 
 let html = '';
 const promises = results.Search.map(async(movie)=>{
