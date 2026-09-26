@@ -1,7 +1,8 @@
 const movieInput = document.querySelector('.js-movie');
 const searchBtn = document.querySelector('.js-search');
 const resultsContainer = document.querySelector('.js-results');
-const showResultBtn = document.querySelector('.js-show-rearch');
+const favoriteContainer = document.querySelector('.js-favorites')
+const showResultBtn = document.querySelector('.js-show-search');
 const showFavoriteBtn = document.querySelector('.js-show-favorites')
 let favorite = JSON.parse(localStorage.getItem('favorite')) || [];
 async function getsInput(){
@@ -17,8 +18,6 @@ if(results.Response === 'False'){
   resultsContainer.textContent = 'movie not found'
  return;
 }
-
-
 let html = '';
 const promises = results.Search.map(async(movie)=>{
 const dataUrl = `https://www.omdbapi.com/?apikey=d5dfca2f&i=${movie.imdbID}`;
@@ -30,7 +29,7 @@ const movies = await Promise.all(promises)
 
 movies.forEach((movie)=>{
   const poster = movie.Poster !== 'N/A'? `<img src="${movie.Poster}">`: '';
- const add = favorite.includes(movie.imdbID) ? ' ❤️Added to  Favorites' : ' ❤️ Add To Favorites'
+ const add = favorite.includes(movie.imdbID) ? ' ❤️ Added to  Favorites' : ' ❤️ Add To Favorites'
 
   html += `
  <div class="movie-card">
@@ -66,7 +65,12 @@ searchBtn.addEventListener('click', getsInput);
 movieInput.addEventListener('keydown', (event) =>{
   if(event.key === 'Enter'){getsInput()}
 })
+
 async function getFavorites(){
+  if (favorite.length === 0) {
+  favoriteContainer.innerHTML = '❤️ No favorite movies yet.';
+  return;
+}
   const promises =  favorite.map(async(id)=>{
   const response = await fetch(`https://www.omdbapi.com/?apikey=d5dfca2f&i=${id}`);
   const data = await response.json();
@@ -87,7 +91,7 @@ async function getFavorites(){
   </div>
   `;
   })
-  document.querySelector('.js-favorites').innerHTML = favoriteHTML;
+  favoriteContainer.innerHTML = favoriteHTML;
   document.querySelectorAll('.js-remove').
   forEach((button)=>{
     button.addEventListener('click' , ()=>{
@@ -100,6 +104,18 @@ async function getFavorites(){
       return favorite;
 }
 getFavorites();
+showResultBtn.addEventListener('click' , ()=>{
+  resultsContainer.style.display = 'grid' ;
+  favoriteContainer.style.display = 'none';
+  showResultBtn.classList.add('active');
+  showFavoriteBtn.classList.remove('active');
+})
+showFavoriteBtn.addEventListener('click' , ()=>{
+  resultsContainer.style.display = 'none' ;
+  favoriteContainer.style.display = 'grid';
+  showFavoriteBtn.classList.add('active');
+  showResultBtn.classList.remove('active');
+})
 function saveToStorage(){
   localStorage.setItem('favorite' , JSON.stringify(favorite))
 }
