@@ -26,6 +26,7 @@ nav{
 }
 .main-section{
  max-width: 600px;
+ width: 90%;
  margin: 0 auto;
 
 }
@@ -49,6 +50,7 @@ li{
 .skill-section{
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
   list-style: none;
 }
