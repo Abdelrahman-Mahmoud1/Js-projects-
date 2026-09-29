@@ -64,6 +64,11 @@ h1 {
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
+.found , .loading , .enter{
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
 
 .movie-card {
   padding: 15px;
@@ -93,6 +98,15 @@ h1 {
   gap: 20px;
   max-width: 1200px;
   margin: 30px auto;
+}
+.js-remove{
+  background-color: rgba(252, 1, 1, 0.973);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.js-remove:hover{
+  background-color: rgba(255, 0, 0, 0.373);
 }
 
 .favorite-card {
