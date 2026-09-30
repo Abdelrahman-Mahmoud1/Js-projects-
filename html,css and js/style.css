@@ -10,8 +10,7 @@ body{
   text-align: center;
   
 }
-nav{
-  
+nav{ 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +64,17 @@ li{
   gap: 15px;
 }
 @media (max-width:600px){
-  .projects{
+  .projects {
     grid-template-columns: 1fr;
   }
-}
+  .skill-section{
+    flex-direction: column;
+    width: auto;
+  }
+ .header h1 , .p1{
+    font-size: 15px;
+  }
+  nav{
+    flex-direction: column;
+  }
+  
