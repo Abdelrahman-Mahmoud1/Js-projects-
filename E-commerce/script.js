@@ -14,12 +14,12 @@ const response  =  await fetch('https://dummyjson.com/products');
 const data = await response.json();
 console.log(data);
 products = data.products ;
- renderProduct();
+ renderProduct(products);
 } 
 getproduct();
-function renderProduct(){
+function renderProduct(array){
   let productHtml = '';
-  products.forEach((product)=>{
+  array.forEach((product)=>{
   productHtml += `
   <div class="product-cont">
   <img src="${product.images}">
@@ -117,6 +117,39 @@ function renderCart(){
   totalPrice.innerHTML = `Total Price:$${price.toFixed(2)}`;
   saveToStorage();
 }
+
+function searchBar(){
+  const searchvalue = searchInput.value.trim().toLowerCase();
+  if(searchvalue === ''){
+    alert('please enter a product name')
+    return;
+  }
+  const filterProduct = products.filter((product)=>{
+  const filterSearch = product.title.toLowerCase().includes(searchvalue)
+   return filterSearch;
+  });
+  if(filterProduct.length === 0){
+    productCont.textContent = 'No Product found';
+    return;
+  }
+  return filterProduct;
+}
+ searchBtn.addEventListener('click' , ()=>{
+    const array =  searchBar();
+    if(array){
+      renderProduct(array)
+    }
+    cartCont.style.display = 'none';
+  })
+searchInput.addEventListener('keydown' , (event)=>{
+  if(event.key === 'Enter'){
+     const array =  searchBar();
+   if(array){
+      renderProduct(array)
+      cartCont.style.display = 'none';
+    }
+  }
+  })
 function saveToStorage(){
   localStorage.setItem('cart', JSON.stringify(cart))
 }
