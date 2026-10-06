@@ -8,11 +8,12 @@ const totalPrice = document.querySelector('.total-price');
 const cartBtn = document.querySelector('.cart-btn');
 const favBtn = document.querySelector('.favorites-btn');
 let products = [];
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('cart'))||[];
 async function getproduct() {
-const response  =  await fetch('https://fakestoreapi.com/products');
+const response  =  await fetch('https://dummyjson.com/products');
 const data = await response.json();
- products = data ;
+console.log(data);
+products = data.products ;
  renderProduct();
 } 
 getproduct();
@@ -21,7 +22,7 @@ function renderProduct(){
   products.forEach((product)=>{
   productHtml += `
   <div class="product-cont">
-  <img src="${product.image}">
+  <img src="${product.images}">
   <p>${product.title}</p>
   <p>${product.price}</p>
   <p>${product.category}</p>
@@ -45,31 +46,78 @@ function renderProduct(){
     const id = button.dataset.id;
     });
   });
+  
 }
 function addToCart(productId){
- let matchingProduct =  products.find((p=> p.id === Number(productId)));
+ let matchingProduct = products.find((p=> p.id === Number(productId)));
  if(!matchingProduct){return};
  const cartItem = cart.find((p=> p.id === matchingProduct.id));
-
  if(cartItem){
-  return;
+  cartItem.quantity++;
  }else{
- cart.push(matchingProduct);
+ 
+ cart.push({...matchingProduct, quantity: 1});
  }
+ saveToStorage();
 }
 function renderCart(){
  let cartHtml = '';
  cart.forEach((cartItem)=>{
   cartHtml += `
-  <div>
-   <img src="${cartItem.image}">
+  <div class="cart-cont">
+   <img src="${cartItem.images}">
   <p>${cartItem.title}</p>
   <p>${cartItem.price}</p>
+  <p>Qunatity: ${cartItem.quantity}</p>
+  <button class="plusbtn" data-id="${cartItem.id}">+</button>
+  <button class="minusbtn" data-id="${cartItem.id}">-</button>
   <p>${cartItem.category}</p>
   <button class="remove-from-cart" data-id="${cartItem.id}">Remove from cart</button>
    </div>
   `;
  }) 
  cartCont.innerHTML = cartHtml;
+ document.querySelectorAll('.remove-from-cart').
+  forEach((button)=>{
+   button.addEventListener('click' , ()=>{
+    const id = button.dataset.id;
+    let newCart = cart.filter((p)=>{ return p.id !== Number(id)});
+     cart = newCart;
+     saveToStorage();
+    renderCart();
+   });
+  });
+  document.querySelectorAll('.plusbtn').
+  forEach((button)=>{
+   button.addEventListener('click' , ()=>{
+    const id = button.dataset.id;
+    const cartItem = cart.find((p=> p.id === Number(id)));
+    cartItem.quantity++;
+    saveToStorage();
+    renderCart();
+   });
+  });
+   document.querySelectorAll('.minusbtn').
+  forEach((button)=>{
+   button.addEventListener('click' , ()=>{
+    const id = button.dataset.id;
+    const cartItem = cart.find((p=> p.id === Number(id)));
+    cartItem.quantity--;
+    if(cartItem.quantity <= 0){
+     cart = cart.filter(p =>p.id !== Number(id));
+    }
+     saveToStorage();
+     renderCart();
+   });
+  });
+  let price = 0;
+  cart.forEach((item)=>{
+    price += item.price * item.quantity;
+  });
+  totalPrice.innerHTML = `Total Price:$${price.toFixed(2)}`;
+  saveToStorage();
+}
+function saveToStorage(){
+  localStorage.setItem('cart', JSON.stringify(cart))
 }
 renderCart();
