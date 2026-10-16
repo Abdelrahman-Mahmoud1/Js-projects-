@@ -9,12 +9,21 @@ const cartBtn = document.querySelector('.cart-btn');
 const favBtn = document.querySelector('.favorites-btn');
 let products = [];
 let cart = JSON.parse(localStorage.getItem('cart'))||[];
+let category = [];
 async function getproduct() {
 const response  =  await fetch('https://dummyjson.com/products');
 const data = await response.json();
 console.log(data);
 products = data.products ;
- renderProduct(products);
+const categoryArray = products.map((product)=>{
+const productCategory =  product.category;
+return productCategory;
+});
+const newCategory  = new Set(categoryArray);
+const convert = Array.from(newCategory);
+category = convert ;
+getCategory();
+renderProduct(products);
 } 
 getproduct();
 function renderProduct(array){
@@ -117,7 +126,24 @@ function renderCart(){
   totalPrice.innerHTML = `Total Price:$${price.toFixed(2)}`;
   saveToStorage();
 }
-
+function getCategory(){
+let categortyHtml = `<option>All Categories</option>`;
+category.forEach((option)=>{
+categortyHtml += `
+  <option>${option}</option>
+  ` 
+})
+selectOption.innerHTML = categortyHtml;
+selectOption.addEventListener('change',()=>{
+const dropDown = selectOption.value;
+if(dropDown === 'All Categories'){
+  renderProduct(products);
+}else{
+   const categoryDrowpDown = products.filter(p => p.category === dropDown);
+   renderProduct(categoryDrowpDown);
+};
+});
+}
 function searchBar(){
   const searchvalue = searchInput.value.trim().toLowerCase();
   if(searchvalue === ''){
